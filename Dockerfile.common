@@ -1,0 +1,14 @@
+FROM gradle:8.6.0-jdk21-graal as builder
+
+WORKDIR /reactions
+
+COPY build.gradle .
+RUN gradle dependencies
+COPY . .
+RUN gradle clean build -x test
+
+FROM container-registry.oracle.com/graalvm/jdk:21
+
+COPY --from=builder /reactions/build/libs/reactions-0.0.1-SNAPSHOT.jar reactions.jar
+
+ENTRYPOINT [ "java", "-jar", "reactions.jar" ]

@@ -1,0 +1,20 @@
+server:
+  port: 8081
+grpc:
+  client:
+    profile-service:
+      address: static://${PROFILE_SERVICE_GRPC_HOST:localhost}:${PROFILE_SERVICE_GRPC_PORT:8080}
+      negotiation-type: PLAINTEXT
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:glimpse}?schema=reactions
+    username: ${POSTGRES_USER:glimpse}
+    password: ${POSTGRES_PWD:password}
+  jpa:
+    open-in-view: false
+  flyway:
+    schemas: reactions
+
+message:
+  url: ${MESSENGER_URL:http://localhost}
