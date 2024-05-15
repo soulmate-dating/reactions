@@ -16,5 +16,15 @@ spring:
   flyway:
     schemas: reactions
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
+      base-path: /
+      path-mapping:
+        prometheus: metrics
+
 message:
   url: ${MESSENGER_URL:http://localhost}
